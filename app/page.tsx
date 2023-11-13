@@ -1,12 +1,21 @@
+"use client";
+import { StoreModal } from "@/components/modals/store-modal";
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
+import { Modal } from "@/components/ui/modal";
+import { useStoreModal } from "@/hooks/use-store-modal";
+import { UserButton } from "@clerk/nextjs";
 
-export default function Home() {
+const SetupPage = () => {
+    const store = useStoreModal();
+
     return (
-        <div className="">
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-            <p>Hello World</p>
-            <Button>Click Me</Button>
+        <div>
+            <UserButton afterSignOutUrl="/sign-in" />
+
+            {/* <StoreModal /> */}
+            <Button onClick={store.onOpen}>Create Store</Button>
         </div>
     );
-}
+};
+
+export default SetupPage;
