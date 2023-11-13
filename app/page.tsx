@@ -1,7 +1,6 @@
 "use client";
 import { StoreModal } from "@/components/modals/store-modal";
 import { Button } from "@/components/ui/button";
-import { Modal } from "@/components/ui/modal";
 import { useStoreModal } from "@/hooks/use-store-modal";
 import { UserButton } from "@clerk/nextjs";
 
@@ -12,7 +11,7 @@ const SetupPage = () => {
         <div>
             <UserButton afterSignOutUrl="/sign-in" />
 
-            {/* <StoreModal /> */}
+            <StoreModal />
             <Button onClick={store.onOpen}>Create Store</Button>
         </div>
     );
