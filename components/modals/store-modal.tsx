@@ -17,6 +17,8 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import Fetch from "@/utils/Fetch";
+import { toast } from "sonner";
 
 const formSchema = z.object({
     name: z.string().min(1),
@@ -36,11 +38,29 @@ export const StoreModal = () => {
         },
     });
 
-    function onSubmit(values: FormValues) {
+    const onSubmit = async (values: FormValues) => {
         // Do something with the form values.
         // ✅ This will be type-safe and validated.
         console.log(values);
-    }
+
+        try {
+            setLoading(true);
+
+            const toastId = toast.loading("Creating store...");
+
+            const response = await Fetch.POST("api/stores", values);
+
+            toast.dismiss(toastId);
+
+            toast.success("Store created!");
+
+            window.location.assign(`/${response.id}`);
+        } catch (error) {
+            toast.error("Something went wrong");
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <>
@@ -73,6 +93,7 @@ export const StoreModal = () => {
                                 />
                                 <div className="flex w-full items-center justify-end space-x-2 pt-6">
                                     <Button
+                                        type="button"
                                         disabled={loading}
                                         variant="outline"
                                         onClick={onClose}

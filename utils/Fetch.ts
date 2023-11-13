@@ -1,7 +1,7 @@
 import { REQUEST } from "@/utils/constants";
 import { RequestBody, RequestContent, RequestMethod } from "types";
 
-const API_URL = process.env.VITE_API_URL;
+// const API_URL = process.env.VITE_API_URL;
 
 export default class Fetch {
     static async GET(url: string) {
@@ -40,7 +40,7 @@ export default class Fetch {
             reqContent.body = JSON.stringify(reqBody);
         }
 
-        const resp = await fetch(`${API_URL}/${url}`, reqContent);
+        const resp = await fetch(`/${url}`, reqContent);
 
         const data = await resp.json();
 
