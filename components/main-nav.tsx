@@ -5,55 +5,15 @@ import { useParams, usePathname } from "next/navigation";
 
 import { cn } from "@/lib/utils";
 
-export function MainNav({
-    className,
-    ...props
-}: React.HTMLAttributes<HTMLElement>) {
+interface MainNavProps extends React.HTMLAttributes<HTMLElement> {}
+
+export const MainNav: React.FC<MainNavProps> = ({ className, ...props }) => {
     const pathname = usePathname();
     const params = useParams();
 
-    const routes = [
-        {
-            href: `/${params.storeId}`,
-            label: "Overview",
-            active: pathname === `/${params.storeId}`,
-        },
-        {
-            href: `/${params.storeId}/billboards`,
-            label: "Billboards",
-            active: pathname === `/${params.storeId}/billboards`,
-        },
-        {
-            href: `/${params.storeId}/categories`,
-            label: "Categories",
-            active: pathname === `/${params.storeId}/categories`,
-        },
-        {
-            href: `/${params.storeId}/sizes`,
-            label: "Sizes",
-            active: pathname === `/${params.storeId}/sizes`,
-        },
-        {
-            href: `/${params.storeId}/colors`,
-            label: "Colors",
-            active: pathname === `/${params.storeId}/colors`,
-        },
-        {
-            href: `/${params.storeId}/products`,
-            label: "Products",
-            active: pathname === `/${params.storeId}/products`,
-        },
-        {
-            href: `/${params.storeId}/orders`,
-            label: "Orders",
-            active: pathname === `/${params.storeId}/orders`,
-        },
-        {
-            href: `/${params.storeId}/settings`,
-            label: "Settings",
-            active: pathname === `/${params.storeId}/settings`,
-        },
-    ];
+    const storeId = params.storeId as string;
+
+    const routes = getRoutes(storeId, pathname);
 
     return (
         <nav
@@ -70,7 +30,7 @@ export function MainNav({
                     className={cn(
                         "text-sm font-medium transition-colors hover:text-primary",
                         route.active
-                            ? "text-black dark:text-white"
+                            ? "font-semibold text-black dark:text-white"
                             : "text-muted-foreground",
                     )}
                 >
@@ -79,4 +39,49 @@ export function MainNav({
             ))}
         </nav>
     );
-}
+};
+
+const getRoutes = (storeId: string, pathname: string) => {
+    return [
+        {
+            href: `/${storeId}`,
+            label: "Overview",
+            active: pathname === `/${storeId}`,
+        },
+        {
+            href: `/${storeId}/billboards`,
+            label: "Billboards",
+            active: pathname === `/${storeId}/billboards`,
+        },
+        {
+            href: `/${storeId}/categories`,
+            label: "Categories",
+            active: pathname === `/${storeId}/categories`,
+        },
+        {
+            href: `/${storeId}/sizes`,
+            label: "Sizes",
+            active: pathname === `/${storeId}/sizes`,
+        },
+        {
+            href: `/${storeId}/colors`,
+            label: "Colors",
+            active: pathname === `/${storeId}/colors`,
+        },
+        {
+            href: `/${storeId}/products`,
+            label: "Products",
+            active: pathname === `/${storeId}/products`,
+        },
+        {
+            href: `/${storeId}/orders`,
+            label: "Orders",
+            active: pathname === `/${storeId}/orders`,
+        },
+        {
+            href: `/${storeId}/settings`,
+            label: "Settings",
+            active: pathname === `/${storeId}/settings`,
+        },
+    ];
+};
