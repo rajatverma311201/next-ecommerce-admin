@@ -1,4 +1,5 @@
 "use client";
+import { Input } from "@/components/ui/input";
 import {
     FormControl,
     FormField,
@@ -6,26 +7,21 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form";
-import ImageUpload from "@/components/image-upload";
-import { FormFieldProps } from "./utils";
+import { FormFieldProps } from "../../../../../../components/dashboard/billboards/utils";
 
-export const ImageUploadFormField: React.FC<FormFieldProps> = ({
-    form,
-    loading,
-}) => {
+export const LabelFormField: React.FC<FormFieldProps> = ({ form, loading }) => {
     return (
         <FormField
             control={form.control}
-            name="imageUrl"
+            name="label"
             render={({ field }) => (
                 <FormItem>
                     <FormLabel>Label</FormLabel>
                     <FormControl>
-                        <ImageUpload
-                            value={field.value ? [field.value] : []}
+                        <Input
                             disabled={loading}
-                            onChange={(url) => field.onChange(url)}
-                            onRemove={() => field.onChange("")}
+                            placeholder="Billboard label"
+                            {...field}
                         />
                     </FormControl>
                     <FormMessage />

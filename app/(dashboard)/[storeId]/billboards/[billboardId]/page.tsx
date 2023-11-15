@@ -1,4 +1,4 @@
-import { BillboardForm } from "@/components/dashboard/billboards/billboard-form";
+import { BillboardForm } from "@/app/(dashboard)/[storeId]/billboards/[billboardId]/components/billboard-form";
 import prismadb from "@/lib/prismadb";
 
 interface BillboardIdPageProps {

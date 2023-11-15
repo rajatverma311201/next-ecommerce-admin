@@ -13,10 +13,14 @@ import { Separator } from "@/components/ui/separator";
 import Fetch from "@/utils/Fetch";
 import { toast } from "sonner";
 import { AlertModal } from "@/components/modals/alert-modal";
-import { BillboardFormValues, formSchema } from "./utils";
+
 import { ImageUploadFormField } from "./image-upload-form-field";
 import { LabelFormField } from "./label-form-field";
 import { BillboardsPageHeader } from "./billboards-page-header";
+import {
+    BillboardFormValues,
+    formSchema,
+} from "@/components/dashboard/billboards/utils";
 
 interface BillboardFormProps {
     initialData: Billboard | null;

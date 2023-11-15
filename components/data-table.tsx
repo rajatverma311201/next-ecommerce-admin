@@ -27,12 +27,14 @@ interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[];
     data: TData[];
     searchKey: string;
+    searchPlaceholder?: string;
 }
 
 export function DataTable<TData, TValue>({
     columns,
     data,
     searchKey,
+    searchPlaceholder,
 }: DataTableProps<TData, TValue>) {
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
@@ -52,7 +54,7 @@ export function DataTable<TData, TValue>({
         <div>
             <div className="flex items-center py-4">
                 <Input
-                    placeholder="Filter billboards..."
+                    placeholder={searchPlaceholder ?? "Search ..."}
                     value={
                         (table
                             .getColumn(searchKey)
