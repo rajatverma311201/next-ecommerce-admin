@@ -7,20 +7,20 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form";
-import { FormFieldProps } from "@/app/(dashboard)/[storeId]/billboards/utils";
+import { FormFieldProps } from "@/app/(dashboard)/[storeId]/categories/utils";
 
-export const LabelFormField: React.FC<FormFieldProps> = ({ form, loading }) => {
+export const NameFormField: React.FC<FormFieldProps> = ({ form, loading }) => {
     return (
         <FormField
             control={form.control}
-            name="label"
+            name="name"
             render={({ field }) => (
                 <FormItem>
-                    <FormLabel>Label</FormLabel>
+                    <FormLabel>Name</FormLabel>
                     <FormControl>
                         <Input
                             disabled={loading}
-                            placeholder="Billboard label"
+                            placeholder="Category name"
                             {...field}
                         />
                     </FormControl>

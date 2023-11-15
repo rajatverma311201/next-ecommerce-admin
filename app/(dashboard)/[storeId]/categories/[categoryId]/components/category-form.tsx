@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { Billboard } from "@prisma/client";
+import { Billboard, Category } from "@prisma/client";
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -14,20 +14,23 @@ import Fetch from "@/utils/Fetch";
 import { toast } from "sonner";
 import { AlertModal } from "@/components/modals/alert-modal";
 
-import { ImageUploadFormField } from "./image-upload-form-field";
-import { LabelFormField } from "./label-form-field";
-import { BillboardsPageHeader } from "./billboards-page-header";
+import { NameFormField } from "./name-form-field";
+import { CategoriesPageHeader } from "./categories-page-header";
 import {
-    BillboardFormValues,
+    CategoryFormValues,
     formSchema,
-} from "@/app/(dashboard)/[storeId]/billboards/utils";
+} from "@/app/(dashboard)/[storeId]/categories/utils";
 
-interface BillboardFormProps {
-    initialData: Billboard | null;
+import { BillboardSelectField } from "./billboard-select-field";
+
+interface CategoryFormProps {
+    initialData: Category | null;
+    billboards: Billboard[];
 }
 
-export const BillboardForm: React.FC<BillboardFormProps> = ({
+export const CategoryForm: React.FC<CategoryFormProps> = ({
     initialData,
+    billboards,
 }) => {
     const params = useParams();
     const router = useRouter();
@@ -35,37 +38,36 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
 
-    const title = initialData ? "Edit billboard" : "Create billboard";
-    const description = initialData
-        ? "Edit a billboard."
-        : "Add a new billboard";
+    const title = initialData ? "Edit category" : "Create category";
+    const description = initialData ? "Edit a category." : "Add a new category";
 
     const action = initialData ? "Save changes" : "Create";
 
-    const form = useForm<BillboardFormValues>({
+    const form = useForm<CategoryFormValues>({
         resolver: zodResolver(formSchema),
-        defaultValues: initialData || { label: "", imageUrl: "" },
+        // defaultValues: initialData || { label: "", imageUrl: "" },
     });
 
-    const billboardId = initialData?.id;
+    const categoryId = initialData?.id;
     const { storeId } = params;
 
-    const onSubmit = async (data: BillboardFormValues) => {
+    const onSubmit = async (data: CategoryFormValues) => {
         try {
             setLoading(true);
-            const toastId = toast.loading("Updating billboard...");
+            const msg = initialData ? "Updat" : "Creat";
+            let toastId = toast.loading(`${msg}ing category...`);
             if (initialData) {
                 await Fetch.PATCH(
-                    `/api/${storeId}/billboards/${billboardId}`,
+                    `/api/${storeId}/categories/${categoryId}`,
                     data,
                 );
             } else {
-                await Fetch.POST(`/api/${storeId}/billboards`, data);
+                await Fetch.POST(`/api/${storeId}/categories`, data);
             }
-            router.push(`/${storeId}/billboards`);
+            router.push(`/${storeId}/categories`);
             router.refresh();
             toast.dismiss(toastId);
-            toast.success("Billboard updated.");
+            toast.success(`Category ${msg}ed successfully.`);
         } catch (error: any) {
             toast.error("Something went wrong.");
         } finally {
@@ -76,17 +78,17 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
     const onDelete = async () => {
         try {
             setLoading(true);
-            const toastId = toast.loading("Deleting billboard...");
+            const toastId = toast.loading("Deleting category...");
             await Fetch.DELETE(
-                `/api/${storeId}/billboards/${billboardId || ""}`,
+                `/api/${storeId}/categories/${categoryId || ""}`,
             );
             toast.dismiss(toastId);
-            toast.success("Billboard deleted.");
+            toast.success("Category deleted.");
             router.push("/");
             router.refresh();
         } catch (error: any) {
             toast.error(
-                "Make sure you removed all categories using  this billboard first.",
+                "Make sure you removed all categories using  this category first.",
             );
         } finally {
             setLoading(false);
@@ -102,7 +104,7 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
                 onConfirm={onDelete}
                 loading={loading}
             />
-            <BillboardsPageHeader
+            <CategoriesPageHeader
                 initialData={initialData}
                 loading={loading}
                 title={title}
@@ -115,9 +117,13 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
                     onSubmit={form.handleSubmit(onSubmit)}
                     className="w-full space-y-8"
                 >
-                    <ImageUploadFormField form={form} loading={loading} />
                     <div className="grid grid-cols-3 gap-8">
-                        <LabelFormField form={form} loading={loading} />
+                        <NameFormField form={form} loading={loading} />
+                        <BillboardSelectField
+                            form={form}
+                            loading={loading}
+                            billboards={billboards}
+                        />
                     </div>
                     <Button
                         disabled={loading}

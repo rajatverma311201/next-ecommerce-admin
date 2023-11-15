@@ -7,7 +7,7 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import ImageUpload from "@/components/image-upload";
-import { FormFieldProps } from "../../../../../../components/dashboard/billboards/utils";
+import { FormFieldProps } from "@/app/(dashboard)/[storeId]/billboards/utils";
 
 export const ImageUploadFormField: React.FC<FormFieldProps> = ({
     form,
