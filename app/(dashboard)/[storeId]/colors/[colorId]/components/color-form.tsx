@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { Billboard, Category } from "@prisma/client";
+import { Color } from "@prisma/client";
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -15,59 +15,51 @@ import { toast } from "sonner";
 import { AlertModal } from "@/components/modals/alert-modal";
 
 import { NameFormField } from "./name-form-field";
-import { CategoriesPageHeader } from "./categories-page-header";
+import { ColorsPageHeader } from "./colors-page-header";
 import {
-    CategoryFormValues,
+    ColorFormValues,
     formSchema,
-} from "@/app/(dashboard)/[storeId]/categories/utils";
+} from "@/app/(dashboard)/[storeId]/colors/utils";
+import { ValueFormField } from "./value-form-field";
 
-import { BillboardSelectField } from "./billboard-select-field";
-
-interface CategoryFormProps {
-    initialData: Category | null;
-    billboards: Billboard[];
+interface ColorFormProps {
+    initialData: Color | null;
 }
 
-export const CategoryForm: React.FC<CategoryFormProps> = ({
-    initialData,
-    billboards,
-}) => {
+export const ColorForm: React.FC<ColorFormProps> = ({ initialData }) => {
     const params = useParams();
     const router = useRouter();
 
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
 
-    const title = initialData ? "Edit category" : "Create category";
-    const description = initialData ? "Edit a category." : "Add a new category";
+    const title = initialData ? "Edit color" : "Create color";
+    const description = initialData ? "Edit a color." : "Add a new color";
 
     const action = initialData ? "Save changes" : "Create";
 
-    const form = useForm<CategoryFormValues>({
+    const form = useForm<ColorFormValues>({
         resolver: zodResolver(formSchema),
-        defaultValues: initialData || { name: "", billboardId: "" },
+        defaultValues: initialData || { name: "", value: "" },
     });
 
-    const categoryId = initialData?.id;
+    const colorId = initialData?.id;
     const { storeId } = params;
 
-    const onSubmit = async (data: CategoryFormValues) => {
+    const onSubmit = async (data: ColorFormValues) => {
         try {
             setLoading(true);
             const msg = initialData ? "Updat" : "Creat";
-            let toastId = toast.loading(`${msg}ing category...`);
+            let toastId = toast.loading(`${msg}ing color...`);
             if (initialData) {
-                await Fetch.PATCH(
-                    `/api/${storeId}/categories/${categoryId}`,
-                    data,
-                );
+                await Fetch.PATCH(`/api/${storeId}/colors/${colorId}`, data);
             } else {
-                await Fetch.POST(`/api/${storeId}/categories`, data);
+                await Fetch.POST(`/api/${storeId}/colors`, data);
             }
-            router.push(`/${storeId}/categories`);
+            router.push(`/${storeId}/colors`);
             router.refresh();
             toast.dismiss(toastId);
-            toast.success(`Category ${msg}ed successfully.`);
+            toast.success(`Color ${msg}ed successfully.`);
         } catch (error: any) {
             toast.error("Something went wrong.");
         } finally {
@@ -78,17 +70,15 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
     const onDelete = async () => {
         try {
             setLoading(true);
-            const toastId = toast.loading("Deleting category...");
-            await Fetch.DELETE(
-                `/api/${storeId}/categories/${categoryId || ""}`,
-            );
+            const toastId = toast.loading("Deleting color...");
+            await Fetch.DELETE(`/api/${storeId}/colors/${colorId || ""}`);
             toast.dismiss(toastId);
-            toast.success("Category deleted.");
+            toast.success("Color deleted.");
             router.push("/");
             router.refresh();
         } catch (error: any) {
             toast.error(
-                "Make sure you removed all categories using  this category first.",
+                "Make sure you removed all colors using  this color first.",
             );
         } finally {
             setLoading(false);
@@ -104,7 +94,7 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
                 onConfirm={onDelete}
                 loading={loading}
             />
-            <CategoriesPageHeader
+            <ColorsPageHeader
                 initialData={initialData}
                 loading={loading}
                 title={title}
@@ -119,11 +109,7 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
                 >
                     <div className="grid grid-cols-3 gap-8">
                         <NameFormField form={form} loading={loading} />
-                        <BillboardSelectField
-                            form={form}
-                            loading={loading}
-                            billboards={billboards}
-                        />
+                        <ValueFormField form={form} loading={loading} />
                     </div>
                     <Button
                         disabled={loading}
