@@ -18,7 +18,9 @@ const BillboardIdPage: React.FC<BillboardIdPageProps> = async ({ params }) => {
                 id: billboardId,
             },
         });
-    } catch (error: any) {}
+    } catch (error: any) {
+        console.log(error);
+    }
 
     return (
         <div className="flex-col">

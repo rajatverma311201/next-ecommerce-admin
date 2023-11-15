@@ -19,7 +19,6 @@ const BillboardsPage: React.FC<BillboardsPageProps> = async ({ params }) => {
         },
     });
 
-    // const formattedBillboards = billboards.map((item) => ({
     const formattedBillboards: BillboardColumn[] = billboards.map((item) => ({
         id: item.id,
         label: item.label,

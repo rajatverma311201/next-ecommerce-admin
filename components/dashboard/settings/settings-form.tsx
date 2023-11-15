@@ -71,8 +71,8 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
             setLoading(true);
             const toastId = toast.loading("Deleting store...");
             await Fetch.DELETE(`/api/stores/${params.storeId}`);
-            router.refresh();
             router.push("/");
+            router.refresh();
             toast.dismiss(toastId);
             toast.success("Store deleted.");
         } catch (error: any) {

@@ -58,10 +58,10 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
             } else {
                 await Fetch.POST(`/api/${storeId}/billboards`, data);
             }
+            router.push(`/${storeId}/billboards`);
             router.refresh();
             toast.dismiss(toastId);
             toast.success("Billboard updated.");
-            router.push(`/${storeId}/billboards`);
         } catch (error: any) {
             toast.error("Something went wrong.");
         } finally {
@@ -76,10 +76,10 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
             await Fetch.DELETE(
                 `/api/${storeId}/billboards/${billboardId || ""}`,
             );
-            router.refresh();
             toast.dismiss(toastId);
             toast.success("Billboard deleted.");
             router.push("/");
+            router.refresh();
         } catch (error: any) {
             toast.error(
                 "Make sure you removed all categories using  this billboard first.",
