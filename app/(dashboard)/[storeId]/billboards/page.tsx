@@ -1,4 +1,5 @@
 import { BillboardClient } from "@/components/dashboard/billboards/billboard-client";
+import { BillboardColumn } from "@/components/dashboard/billboards/columns";
 import prismadb from "@/lib/prismadb";
 import { format } from "date-fns";
 
@@ -17,8 +18,9 @@ const BillboardsPage: React.FC<BillboardsPageProps> = async ({ params }) => {
             createdAt: "desc",
         },
     });
-    const formattedBillboards = billboards.map((item) => ({
-        // const formattedBillboards: BillboardColumn[] = billboards.map((item) => ({
+
+    // const formattedBillboards = billboards.map((item) => ({
+    const formattedBillboards: BillboardColumn[] = billboards.map((item) => ({
         id: item.id,
         label: item.label,
         createdAt: format(item.createdAt, "MMMM do, yyyy"),

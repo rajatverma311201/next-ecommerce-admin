@@ -7,13 +7,13 @@ import { Button } from "@/components/ui/button";
 // import { DataTable } from "@/components/ui/data-table";
 import { Heading } from "@/components/ui/heading";
 import { Separator } from "@/components/ui/separator";
+import { BillboardColumn } from "./columns";
 // import { ApiList } from "@/components/ui/api-list";
 
 // import { columns, BillboardColumn } from "./columns";
 
 interface BillboardClientProps {
-    //   data: BillboardColumn[];
-    data: any[];
+    data: BillboardColumn[];
 }
 
 export const BillboardClient: React.FC<BillboardClientProps> = ({
