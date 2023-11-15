@@ -40,7 +40,7 @@ export default class Fetch {
             reqContent.body = JSON.stringify(reqBody);
         }
 
-        const resp = await fetch(`/${url}`, reqContent);
+        const resp = await fetch(`${url}`, reqContent);
 
         const data = await resp.json();
 

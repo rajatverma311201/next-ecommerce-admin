@@ -49,11 +49,15 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
         defaultValues: initialData,
     });
 
+    console.log(initialData);
+
     const onSubmit = async (data: SettingsFormValues) => {
         try {
             setLoading(true);
+            const toastId = toast.loading("Updating store...");
             await Fetch.PATCH(`/api/stores/${params.storeId}`, data);
             router.refresh();
+            toast.dismiss(toastId);
             toast.success("Store updated.");
         } catch (error: any) {
             toast.error("Something went wrong.");
@@ -65,9 +69,11 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
     const onDelete = async () => {
         try {
             setLoading(true);
+            const toastId = toast.loading("Deleting store...");
             await Fetch.DELETE(`/api/stores/${params.storeId}`);
             router.refresh();
             router.push("/");
+            toast.dismiss(toastId);
             toast.success("Store deleted.");
         } catch (error: any) {
             toast.error(

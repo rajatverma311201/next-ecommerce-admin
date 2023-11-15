@@ -48,7 +48,7 @@ export const StoreModal = () => {
 
             const toastId = toast.loading("Creating store...");
 
-            const response = await Fetch.POST("api/stores", values);
+            const response = await Fetch.POST("/api/stores", values);
 
             toast.dismiss(toastId);
 
