@@ -3,13 +3,13 @@ import { format } from "date-fns";
 import { ColorColumn } from "./components/columns";
 import { ColorClient } from "./components/color-client";
 
-interface CategoriesPageProps {
+interface ColorsPageProps {
     params: {
         storeId: string;
     };
 }
 
-const CategoriesPage: React.FC<CategoriesPageProps> = async ({ params }) => {
+const ColorsPage: React.FC<ColorsPageProps> = async ({ params }) => {
     const colors = await prismadb.color.findMany({
         where: {
             storeId: params.storeId,
@@ -35,4 +35,4 @@ const CategoriesPage: React.FC<CategoriesPageProps> = async ({ params }) => {
         </div>
     );
 };
-export default CategoriesPage;
+export default ColorsPage;
