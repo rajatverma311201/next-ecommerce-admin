@@ -4,7 +4,7 @@ import { ColumnDef } from "@tanstack/react-table";
 
 import { CellAction } from "./cell-action";
 
-export type ProductColumn = {
+export interface ProductColumn {
     id: string;
     name: string;
     price: string;
@@ -14,7 +14,7 @@ export type ProductColumn = {
     createdAt: string;
     isFeatured: boolean;
     isArchived: boolean;
-};
+}
 
 export const columns: ColumnDef<ProductColumn>[] = [
     {
