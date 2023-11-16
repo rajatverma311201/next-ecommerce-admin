@@ -55,6 +55,16 @@ export function DataTable<TData, TValue>({
             columnFilters,
         },
     });
+    table.getState().pagination.pageSize = 5;
+
+    const currPageIdx = table.getState().pagination.pageIndex;
+    const currPageSize = table.getState().pagination.pageSize;
+
+    const startCnt = currPageIdx * currPageSize;
+    const endCnt =
+        startCnt + currPageSize > data.length
+            ? data.length
+            : startCnt + currPageSize;
 
     return (
         <div>
@@ -127,10 +137,12 @@ export function DataTable<TData, TValue>({
                     </TableBody>
                 </Table>
             </div>
-            <div className="mt-4 flex justify-end gap-5">
+            <div className="mt-4 flex flex-wrap-reverse justify-end gap-10">
+                <div className="flex w-[100px] items-center justify-center whitespace-nowrap text-sm font-medium">
+                    {startCnt + 1} - {endCnt} of {data.length} items
+                </div>
                 <div className="flex w-[100px] items-center justify-center text-sm font-medium">
-                    Page {table.getState().pagination.pageIndex + 1} of{" "}
-                    {table.getPageCount()}
+                    Page {currPageIdx + 1} of {table.getPageCount()}
                 </div>
                 <div className="flex items-center space-x-2">
                     <Button
