@@ -1,5 +1,4 @@
 "use client";
-import { Input } from "@/components/ui/input";
 import {
     FormControl,
     FormField,
@@ -7,7 +6,7 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form";
-import { FormFieldProps } from "@/app/(dashboard)/[storeId]/colors/utils";
+import { FormFieldProps } from "@/app/(dashboard)/[storeId]/products/utils";
 import {
     Select,
     SelectContent,

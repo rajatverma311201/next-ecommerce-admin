@@ -6,9 +6,8 @@ import {
     FormItem,
     FormLabel,
 } from "@/components/ui/form";
-import { FormFieldProps } from "@/app/(dashboard)/[storeId]/colors/utils";
+import { FormFieldProps } from "@/app/(dashboard)/[storeId]/products/utils";
 
-import { Size } from "@prisma/client";
 import { Checkbox } from "@/components/ui/checkbox";
 
 export const IsArchivedFormField: React.FC<FormFieldProps> = ({ form }) => {

@@ -7,7 +7,7 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form";
-import { FormFieldProps } from "@/app/(dashboard)/[storeId]/colors/utils";
+import { FormFieldProps } from "@/app/(dashboard)/[storeId]/products/utils";
 
 export const NameFormField: React.FC<FormFieldProps> = ({ form, loading }) => {
     return (

@@ -1,6 +1,5 @@
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { ProductFormValues } from "../products/utils";
 
 export const formSchema = z.object({
     name: z.string().min(2),
@@ -12,6 +11,6 @@ export const formSchema = z.object({
 export type ColorFormValues = z.infer<typeof formSchema>;
 
 export interface FormFieldProps {
-    form: ReturnType<typeof useForm<ProductFormValues>>;
+    form: ReturnType<typeof useForm<ColorFormValues>>;
     loading: boolean;
 }

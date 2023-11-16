@@ -1,22 +1,13 @@
 "use client";
-import { Input } from "@/components/ui/input";
 import {
     FormControl,
     FormDescription,
     FormField,
     FormItem,
     FormLabel,
-    FormMessage,
 } from "@/components/ui/form";
-import { FormFieldProps } from "@/app/(dashboard)/[storeId]/colors/utils";
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select";
-import { Size } from "@prisma/client";
+import { FormFieldProps } from "@/app/(dashboard)/[storeId]/products/utils";
+
 import { Checkbox } from "@/components/ui/checkbox";
 
 export const IsFeaturedFormField: React.FC<FormFieldProps> = ({ form }) => {
