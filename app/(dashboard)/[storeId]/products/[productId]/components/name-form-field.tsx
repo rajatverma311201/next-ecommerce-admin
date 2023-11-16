@@ -7,7 +7,7 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form";
-import { FormFieldProps } from "@/app/(dashboard)/[storeId]/sizes/utils";
+import { FormFieldProps } from "@/app/(dashboard)/[storeId]/colors/utils";
 
 export const NameFormField: React.FC<FormFieldProps> = ({ form, loading }) => {
     return (
@@ -20,7 +20,7 @@ export const NameFormField: React.FC<FormFieldProps> = ({ form, loading }) => {
                     <FormControl>
                         <Input
                             disabled={loading}
-                            placeholder="Size name"
+                            placeholder="Product name"
                             {...field}
                         />
                     </FormControl>

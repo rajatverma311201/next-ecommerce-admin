@@ -65,7 +65,7 @@ model Product {
   isFeatured  Boolean   @default(false)
   isArchived  Boolean   @default(false)
   sizeId      String    @db.ObjectId // Foreign Key to Size
-  size        Size      @relation(fields: [sizeId], references: [id])
+  size        Size      @relation("SizeToProduct", fields: [sizeId], references: [id])
   colorId     String    @db.ObjectId // Foreign Key to Color
   color       Color     @relation(fields: [colorId], references: [id])
   images      Image[]   // Relation to Image model
@@ -111,7 +111,7 @@ model Size {
   store       Store     @relation("StoreToSize", fields: [storeId], references: [id])
   name        String
   value       String
-  products    Product[] // Relation to Product model
+  products    Product[] @relation("SizeToProduct") // Relation to Product model
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 

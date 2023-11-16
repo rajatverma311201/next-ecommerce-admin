@@ -7,20 +7,21 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form";
-import { FormFieldProps } from "@/app/(dashboard)/[storeId]/sizes/utils";
+import { FormFieldProps } from "@/app/(dashboard)/[storeId]/colors/utils";
 
-export const NameFormField: React.FC<FormFieldProps> = ({ form, loading }) => {
+export const PriceFormField: React.FC<FormFieldProps> = ({ form, loading }) => {
     return (
         <FormField
             control={form.control}
-            name="name"
+            name="price"
             render={({ field }) => (
                 <FormItem>
-                    <FormLabel>Name</FormLabel>
+                    <FormLabel>Price</FormLabel>
                     <FormControl>
                         <Input
+                            type="number"
                             disabled={loading}
-                            placeholder="Size name"
+                            placeholder="9.99"
                             {...field}
                         />
                     </FormControl>
