@@ -38,6 +38,8 @@ export const SizeForm: React.FC<SizeFormProps> = ({ initialData }) => {
 
     const action = initialData ? "Save changes" : "Create";
 
+    console.log("initialData", initialData);
+
     const form = useForm<SizeFormValues>({
         resolver: zodResolver(formSchema),
         defaultValues: initialData || { name: "", value: "" },
