@@ -1,6 +1,8 @@
 import { authMiddleware } from "@clerk/nextjs";
 
 export default authMiddleware({
+    publicRoutes: ["/api/:path*"],
+
     beforeAuth: (req) => {
         const { pathname } = new URL(req.url, req.nextUrl.origin);
         if (pathname.startsWith("/api") && req.method == "GET") {
