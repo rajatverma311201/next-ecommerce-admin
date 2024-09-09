@@ -5,9 +5,11 @@ import { Heading } from "@/components/ui/heading";
 import { Separator } from "@/components/ui/separator";
 import { formatter } from "@/lib/utils";
 
+import { ProductsUnderCategory } from "@/components/charts/products-under-category";
 import { Overview } from "@/components/overview";
 import {
     getGraphRevenue,
+    getProductsUnderEachCategoryCount,
     getSalesCount,
     getStockCount,
     getTotalRevenue,
@@ -22,9 +24,13 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
     const salesCount = await getSalesCount(params.storeId);
     const stockCount = await getStockCount(params.storeId);
     const graphRevenue = await getGraphRevenue(params.storeId);
+    const productsUnderCategoryCount = await getProductsUnderEachCategoryCount(
+        params.storeId,
+    );
 
     return (
         <div className="flex-col">
+            <p>{JSON.stringify(productsUnderCategoryCount)}</p>
             <div className="flex-1 space-y-4 p-8 pt-6">
                 <Heading
                     title="Dashboard"
@@ -72,6 +78,16 @@ const DashboardPage: React.FC<DashboardPageProps> = async ({ params }) => {
                         </CardContent>
                     </Card>
                 </div>
+                <Card className="col-span-4">
+                    <CardHeader>
+                        <CardTitle>Products By Category</CardTitle>
+                    </CardHeader>
+                    <CardContent className="pl-2">
+                        <ProductsUnderCategory
+                            data={productsUnderCategoryCount}
+                        />
+                    </CardContent>
+                </Card>
                 <Card className="col-span-4">
                     <CardHeader>
                         <CardTitle>Overview</CardTitle>

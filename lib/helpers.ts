@@ -102,3 +102,57 @@ export const getTotalRevenue = async (storeId: string) => {
 
     return totalRevenue;
 };
+
+export const getAllProductAndCategoriesCountData = async (storeId: string) => {
+    const products = await prismadb.product.findMany({
+        where: {
+            storeId,
+        },
+        include: {
+            category: true,
+        },
+    });
+
+    const categories = await prismadb.category.findMany({
+        where: {
+            storeId,
+        },
+    });
+
+    return { products, categories };
+};
+
+export const getProductsUnderEachCategoryCount = async (storeId: string) => {
+    const products = await prismadb.product.findMany({
+        where: {
+            storeId,
+        },
+        include: {
+            category: true,
+        },
+    });
+
+    const categories = await prismadb.category.findMany({
+        where: {
+            storeId,
+        },
+    });
+
+    const productsUnderEachCategory: { [key: string]: number } = {};
+
+    for (const category of categories) {
+        productsUnderEachCategory[category.name] = 0;
+    }
+
+    for (const product of products) {
+        productsUnderEachCategory[product.category.name] += 1;
+    }
+
+    const mappedProductsUnderEachCategory = Object.keys(
+        productsUnderEachCategory,
+    ).map((key) => ({
+        name: key,
+        total: productsUnderEachCategory[key],
+    }));
+    return mappedProductsUnderEachCategory;
+};
